@@ -7,7 +7,7 @@ import (
     "./common"
     tool "./utils"
     log "github.com/cihub/seelog"
-    gcfg "code.google.com/p/gcfg"
+    gcfg "gopkg.in/gcfg.v1"
     worker "./download"
     url "./url"
     //"fmt"
