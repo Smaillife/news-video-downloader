@@ -13,12 +13,20 @@ import (
 
 
 func Init() {
-    logger, err := log.LoggerFromConfigAsFile("./conf/log.xml")
+    logger, err := log.LoggerFromConfigAsFile(GetCurrentDirectory() + "../conf/log.xml")
     if err != nil {
         fmt.Println("log init failed, programme exit", err)
         os.Exit(1)
     }
     log.ReplaceLogger(logger)
+}
+
+func GetCurrentDirectory() string {
+    dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+    if err != nil {
+        log.Error(err)
+    }
+    return strings.Replace(dir, "\\", "/", -1) + "/"
 }
 
 func SaveFileDisk(rootPath string, fileName string, content []byte, forceDel bool) error {

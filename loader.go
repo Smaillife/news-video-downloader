@@ -16,7 +16,7 @@ import (
 
 
 var refreshTimer = time.NewTicker(time.Second * 1)
-var confFile = flag.String("c", "./conf/config.ini", "set the config path")
+var confFile = flag.String("c", tool.GetCurrentDirectory() + "../conf/config.ini", "set the config path")
 
 
 func main() {
