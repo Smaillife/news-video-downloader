@@ -13,7 +13,8 @@ func Worker() {
         ts := <- common.TsQueue
         log.Debug("tslink: ", ts.Url,", tsCookie: ", ts.Cookie, " tsname: ", ts.Name)
         if utils.IsFileOrPathExist(filepath.Join(common.Cfg.News.SaveDir, ts.Name)) {
-            return
+            log.Debug("tsfile: ", filepath.Join(common.Cfg.News.SaveDir, ts.Name), " exited, skip...")
+            continue;
         }
         ret, tsContent, _ := urllib.GetUrl(ts.Url, "GET", ts.Cookie, true)
         if !ret {

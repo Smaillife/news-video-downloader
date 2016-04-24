@@ -13,7 +13,7 @@ import (
 
 
 func Init() {
-    logger, err := log.LoggerFromConfigAsFile("/Users/fengguanjin/project/news-video-downloader/conf/log.xml")
+    logger, err := log.LoggerFromConfigAsFile("./conf/log.xml")
     if err != nil {
         fmt.Println("log init failed, programme exit", err)
         os.Exit(1)

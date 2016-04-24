@@ -141,6 +141,7 @@ func getVdoLinks(vdoUrl string) {
                 if err != nil {
                     log.Critical("tslink: ", line, " generate failed, err: ", err)
                 }
+                log.Info("tslink: ", tsLink, " is ready  inserted into tsqueue")
                 common.TsQueue <- &common.FileLink{tsLink.String(), cookie, line}
                 log.Info("tslink: ", tsLink, " has inserted into tsqueue")
             }

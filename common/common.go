@@ -23,4 +23,4 @@ type FileLink struct {
 }
 
 var Cfg Config
-var TsQueue = make(chan *FileLink, 100)
+var TsQueue = make(chan *FileLink, 1)
