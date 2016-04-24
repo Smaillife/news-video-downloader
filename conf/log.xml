@@ -1,0 +1,20 @@
+<seelog>
+    <outputs formatid="main">
+        <filter levels="critical,error,warn">
+            <rollingfile type="date" filename="logs/wf.log" datepattern="02.01.2006.15" maxrolls="7" />
+            <console />
+        </filter>
+        <filter levels="debug">
+            <rollingfile type="date" filename="logs/debug.log" datepattern="02.01.2006.15" maxrolls="7" />
+            <console />
+        </filter>
+        <filter levels="info">
+            <rollingfile type="date" filename="logs/info.log" datepattern="02.01.2006.15" maxrolls="7" />
+            <console />
+        </filter>
+    </outputs>
+
+    <formats>
+        <format id="main" format="%Date/%Time [%LEV] %Msg%n"/>
+    </formats>
+</seelog>
