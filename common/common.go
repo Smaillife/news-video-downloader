@@ -12,6 +12,7 @@ type Config struct {
         FakeUA string
         CTimeout int
         RWTimeout int
+        DelaySeq int
 
     }
 }

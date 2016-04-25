@@ -11,8 +11,10 @@ import (
     "net/http"
     "encoding/json"
     "strings"
+    "strconv"
     "../common"
     "net"
+    "regexp"
     "time"
     urllib "net/url"
     utils "../utils"
@@ -104,6 +106,44 @@ func ExtractUrlFromJson(str []byte) []byte {
 
 }
 
+func cacheIndex(str string) string {
+    seq := utils.ExtractSeq(str)
+    if (seq < 1) {
+        log.Warn("cache index failed")
+        return str
+    }
+    tsListArr := strings.Split(str, "\n")
+    tsReg := regexp.MustCompile(`(.*_)` + strconv.Itoa(seq)+ `(\.ts)`)
+    tsTemplate := ""
+    for _, line := range tsListArr {
+        if strings.Contains(line, "_" + strconv.Itoa(seq)) {
+            tsRegRet := tsReg.FindAllStringSubmatch(line, -1)
+            if len(tsRegRet[0]) != 3 {
+                log.Warn("ts template parse failed, array: ", tsRegRet)
+                return str
+            }
+            tsTemplate = tsRegRet[0][1]
+            log.Debug("ts template: ", tsTemplate)
+            break
+        }
+    }
+    cacheStr := `#EXTM3U
+    #EXT-X-VERSION:3
+    #EXT-X-ALLOW-CACHE:NO
+    #EXT-X-TARGETDURATION:10
+    #EXT-X-MEDIA-SEQUENCE:` + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `
+    #EXTINF:10.0,
+    ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `.ts
+    #EXTINF:10.0,
+    ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 1) + `.ts
+    #EXTINF:10.0,
+    ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 2) + `.ts`
+    //log.Debug("cache index: ", cacheStr)
+
+    return cacheStr
+
+}
+
 func getVdoLinks(vdoUrl string) {
     status, ret, cookie := GetUrl(vdoUrl, "GET", nil, true)
     urlInfo, err := urllib.Parse(vdoUrl)
@@ -125,7 +165,8 @@ func getVdoLinks(vdoUrl string) {
             log.Critical("Video ts video list fetch failed")
             return
         }
-        err = utils.SaveFileDisk(common.Cfg.News.SaveDir, common.Cfg.News.M3u8FileName, tsList, true)
+        cacheList := cacheIndex(string(tsList))
+        err = utils.SaveFileDisk(common.Cfg.News.SaveDir, common.Cfg.News.M3u8FileName, []byte(cacheList), true)
         if err != nil {
             log.Error("url: ", common.Cfg.News.TokenUrl,
                 " M3u8: ", filepath.Join(common.Cfg.News.SaveDir, common.Cfg.News.M3u8FileName), " create failed, err: ", err)

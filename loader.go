@@ -35,7 +35,7 @@ func main() {
             select {
             case <-refreshTimer.C:
                 log.Infof("Video M3U8 Url[%s] refresh...", common.Cfg.News.TokenUrl)
-                go url.Dispatch(common.Cfg.News.TokenUrl, "GET", true)
+                url.Dispatch(common.Cfg.News.TokenUrl, "GET", true)
 
             }
         }

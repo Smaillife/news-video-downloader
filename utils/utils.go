@@ -74,13 +74,13 @@ func IsFileOrPathExist(item string) bool {
     return err == nil || os.IsExist(err)
 }
 func checkSeq(cur string, oldPath string) bool {
-    curSeq := extractSeq(cur)
+    curSeq := ExtractSeq(cur)
     oldContent, err := ioutil.ReadFile(oldPath)
     if err != nil {
         log.Warn("old m3u8 file read failed, err: ", oldPath)
         return true
     }
-    oldSeq := extractSeq(string(oldContent))
+    oldSeq := ExtractSeq(string(oldContent))
     if curSeq >= oldSeq {
         return true
     }
@@ -89,7 +89,7 @@ func checkSeq(cur string, oldPath string) bool {
     return false
 }
 
-func extractSeq(str string) (int) {
+func ExtractSeq(str string) (int) {
     ret := strings.Split(str, "\n")
     var digitsRegexp = regexp.MustCompile(`(\d+)`)
     for _, line := range ret {
