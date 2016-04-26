@@ -128,17 +128,17 @@ func cacheIndex(str string) string {
         }
     }
     cacheStr := `#EXTM3U
- #EXT-X-VERSION:3
- #EXT-X-ALLOW-CACHE:NO
- #EXT-X-TARGETDURATION:10
- #EXT-X-MEDIA-SEQUENCE:` + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `
- #EXTINF:10.0,
- ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `.ts
- #EXTINF:10.0,
- ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 1) + `.ts
- #EXTINF:10.0,
- ` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 2) + `.ts
- `
+#EXT-X-VERSION:3
+#EXT-X-ALLOW-CACHE:NO
+#EXT-X-TARGETDURATION:10
+#EXT-X-MEDIA-SEQUENCE:` + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `
+#EXTINF:10.0,
+` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq) + `.ts
+#EXTINF:10.0,
+` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 1) + `.ts
+#EXTINF:10.0,
+` + tsTemplate + strconv.Itoa(seq - common.Cfg.News.DelaySeq + 2) + `.ts
+`
     //log.Debug("cache index: ", cacheStr)
 
     return cacheStr
