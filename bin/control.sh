@@ -8,7 +8,7 @@
 
 ret=0
 PROC=cctvbnews
-BINPATH="${DIR}"${PROC}
+BINPATH="${DIR}/bin/"${PROC}
 
 
 start() {
