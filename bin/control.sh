@@ -8,7 +8,7 @@
 
 ret=0
 PROC=cctvbnews
-BINPATH="/home/guanjin/video/news/bin/"${PROC}
+BINPATH="${DIR}"${PROC}
 
 
 start() {
