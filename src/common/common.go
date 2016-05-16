@@ -13,6 +13,7 @@ type Config struct {
         CTimeout int
         RWTimeout int
         DelaySeq int
+        Rateline int
 
     }
 }

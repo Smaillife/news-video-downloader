@@ -155,7 +155,7 @@ func getVdoLinks(vdoUrl string) {
     }
     if status == true {
         m3u8BitRate := strings.Split(string(ret), "\n")
-        m3u8File, err := urlInfo.Parse(m3u8BitRate[7])
+        m3u8File, err := urlInfo.Parse(m3u8BitRate[common.Cfg.News.Rateline])
         if err != nil {
             log.Critical("Video m3u8 link: ", m3u8File, " fetch content failed",
                 "M3u8 chunklist: ", m3u8BitRate)
